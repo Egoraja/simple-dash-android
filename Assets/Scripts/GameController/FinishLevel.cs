@@ -5,9 +5,9 @@ public class FinishLevel : MonoBehaviour
     [SerializeField] private GameController gameController;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out PlayerMovement playerMovement))
+        if (collision.TryGetComponent(out IMoveAbility moveAbility))
         {
-            playerMovement.StopRun();
+            moveAbility.StopMove();
             gameController.OnLevelComplete();        
         }
     }

@@ -1,15 +1,27 @@
 using UnityEngine;
 
-public class CoinAbility : MonoBehaviour
+public class CoinAbility : MonoBehaviour, ICoinValue
 {
+    [SerializeField] private float coinValue;
+
     private bool isCollect = false;
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    public float CoinValue
     {
-        if (collision.TryGetComponent(out CoinCollector coinCollector) && isCollect == false)
+        get
         {
-            isCollect = true;
-            coinCollector.AddCoin();
-            transform.localScale = Vector3.zero;
+            if (isCollect == false)
+            {
+                RemoveVisibility();
+                return coinValue;
+            }
+            else return 0;
         }
     }
+
+    private void RemoveVisibility()
+    {       
+            isCollect = true;
+            transform.localScale = Vector3.zero;       
+    }   
 }

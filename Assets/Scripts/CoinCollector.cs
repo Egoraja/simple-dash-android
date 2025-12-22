@@ -2,9 +2,21 @@ using UnityEngine;
 
 public class CoinCollector : MonoBehaviour
 {
-    [SerializeField] private GameController gameController;
-    public void AddCoin()
+    private IUICoinAmount uICoinAmount;
+
+    private void Start()
     {
-        gameController.CollectCoin();
+        uICoinAmount = GetComponent<IUICoinAmount>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out ICoinValue coinValue))
+            AddCoin(coinValue.CoinValue);
+    }
+
+    private void AddCoin(float coinValue)
+    {
+        uICoinAmount.CollectCoin(coinValue);      
     }
 }
