@@ -10,10 +10,11 @@ public class PlayerMovement : MonoBehaviour, IMoveAbility
     [SerializeField] private float jumpHeight;
     private IPlayerInput input;
     private Rigidbody2D body;
-
     private PlayerRun run;
     private PlayerJump jump;
     private PlayerStopGame playerStopGame;
+
+    public PlayerRun Run {set{ run = value; }}
   
 
     private bool isActive;
@@ -29,12 +30,14 @@ public class PlayerMovement : MonoBehaviour, IMoveAbility
 
     private void OnEnable()
     {
-        input.OnJumpPressed += jump.TryJump;
+        if (input != null)
+            input.OnJumpPressed += jump.TryJump;
     }
 
     private void OnDisable()
     {
-        input.OnJumpPressed -= jump.TryJump;
+        if(input != null)
+            input.OnJumpPressed -= jump.TryJump;
     }
 
     public void StartMove()
